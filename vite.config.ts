@@ -3,12 +3,12 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, "../", "");
+  const env = loadEnv(mode, process.cwd(), "");
 
   const viteUrl = new URL(env.VITE_URL || "http://localhost:5173");
   // console.log(viteUrl)
   return {
-    envDir: "../",
+    // envDir: "../",
     server: {
       host: viteUrl.hostname, // "192.168.29.118"
       port: Number(viteUrl.port) || 5173, // 5173
