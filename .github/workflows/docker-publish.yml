@@ -142,7 +142,7 @@ jobs:
   Publish-tunelog:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    needs: merge-backend
+    needs: merge-frontend
     permissions:
       contents: write
     steps:
@@ -156,10 +156,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
 
       - name: push docker package
         run: |
-          crane copy ghcr.io/adiiverma40/tunelog-backend/backend:${{ steps.meta.outputs.version }} ghcr.io/adiiverma40/tunelog/backend:${{ steps.meta.outputs.version }}
+          crane copy ghcr.io/adiiverma40/tunelog-frontend/frontend:${{ steps.meta.outputs.version }} ghcr.io/adiiverma40/tunelog/frontend:${{ steps.meta.outputs.version }}
 
-          crane copy ghcr.io/adiiverma40/tunelog-backend/backend:${{ steps.meta.outputs.version }} ghcr.io/adiiverma40/tunelog/backend:latest
+          crane copy ghcr.io/adiiverma40/tunelog-frontend/frontend:${{ steps.meta.outputs.version }} ghcr.io/adiiverma40/tunelog/frontend:latest
