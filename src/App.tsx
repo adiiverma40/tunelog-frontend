@@ -17,41 +17,49 @@ import Config from "./pages/tweaks/config";
 import Queue from "./pages/Jam/Queue";
 import NowPlaying from "./pages/Jam/NowPlaying";
 import JamUsers from "./pages/Jam/JamUsers";
-import { fetchGetUsers, CheckAuth } from "./API";
+import { fetchGetUsers, fetchPing } from "./API";
 import { useNotificationStream } from "./hooks/Usenotificationstream";
 import ListenBrainzImport from "./pages/scrobble/listenbrainz";
 import ListenbrainzCF from "./pages/playlist/LB_CF";
 import ListenbrainzLibrary from "./pages/librarySync/listenbrainz";
 import SkippedSongs from "./pages/Library/skipped";
-
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import { WhatsNewModal } from "./pages/changelog";
 
-export default function App() {
+function AppContent() {
   const navigate = useNavigate();
+  const { loginUser, logoutUser } = useAuth();
+
   useNotificationStream();
+
   useEffect(() => {
     const verifyUser = async () => {
-      const auth = await CheckAuth();
-      console.log(auth);
+      const auth = await fetchPing();
+
+      if (auth.username) {
+        loginUser(auth.username);
+      }
+
       fetchGetUsers().catch(() => {});
+
       if (!auth) {
         navigate("/signin");
+        logoutUser();
         return;
       }
     };
     verifyUser();
-  }, [navigate]);
+  }, [navigate, loginUser, logoutUser]);
 
   return (
     <>
-      <WhatsNewModal/>
+      <WhatsNewModal />
       <ScrollToTop />
       <Routes>
         <Route element={<AppLayout />}>
           <Route index path="/" element={<Home />} />
           <Route path="/user" element={<UserProfiles />} />
           <Route path="/librarySync" element={<LibrarySync />} />
-
           <Route
             path="/library/listenbrainz"
             element={<ListenbrainzLibrary />}
@@ -66,22 +74,27 @@ export default function App() {
           <Route path="/queue" element={<Queue />} />
           <Route path="/import" element={<Import />} />
           <Route path="/jamuser" element={<JamUsers />} />
-
           <Route path="/library/skipped" element={<SkippedSongs />} />
           <Route
             path="/playlist/listenbrainz/cf"
             element={<ListenbrainzCF />}
           />
-
           <Route
             path="/scrobble/listenbrainz"
             element={<ListenBrainzImport />}
           />
         </Route>
-
         <Route path="/signin" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }

@@ -69,26 +69,28 @@ export function useMediaQuery(query: string) {
   return matches;
 }
 
-export async function fetchPlaylistFromNavidrome(
-  playlistId: string,
-): Promise<any[]> {
-  const baseUrl = import.meta.env.VITE_NAVIDROME_URL;
-  const user =
-    localStorage.getItem("tunelog_user") ||
-    sessionStorage.getItem("tunelog_user");
-  const pass =
-    localStorage.getItem("tunelog_password") ||
-    sessionStorage.getItem("tunelog_password");
-  if (!baseUrl || !user || !pass) return [];
-  const url = `${baseUrl}/rest/getPlaylist?id=${playlistId}&u=${user}&p=${pass}&v=1.16.1&c=tunelog&f=json`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data["subsonic-response"]?.playlist?.entry || [];
-  } catch {
-    return [];
-  }
-}
+// Obsolete replaced with backend api call to fetch playlists from navidrome
+
+// export async function fetchPlaylistFromNavidrome(
+//   playlistId: string,
+// ): Promise<any[]> {
+//   const baseUrl = import.meta.env.VITE_NAVIDROME_URL;
+//   const user =
+//     localStorage.getItem("tunelog_user") ||
+//     sessionStorage.getItem("tunelog_user");
+//   const pass =
+//     localStorage.getItem("tunelog_password") ||
+//     sessionStorage.getItem("tunelog_password");
+//   if (!baseUrl || !user || !pass) return [];
+//   const url = `${baseUrl}/rest/getPlaylist?id=${playlistId}&u=${user}&p=${pass}&v=1.16.1&c=tunelog&f=json`;
+//   try {
+//     const response = await fetch(url);
+//     const data = await response.json();
+//     return data["subsonic-response"]?.playlist?.entry || [];
+//   } catch {
+//     return [];
+//   }
+// }
 
 export function LazyAlbumArt({
   songId,

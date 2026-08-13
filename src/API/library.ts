@@ -1,4 +1,4 @@
-import { BASE_URL, getToken } from "./client";
+import { BASE_URL } from "./client";
 import type {
   ManualMarkingSong,
   ExplicitTag,
@@ -33,7 +33,6 @@ export async function updateExplicitTag(
 
 export async function getSkippedSongs(): Promise<SkippedSong[]> {
   const res = await fetch(`${BASE_URL}/api/listens/skipped`, {
-    headers: { Authorization: `Bearer ${getToken()}` },
   });
   if (!res.ok)
     throw new Error(
@@ -44,7 +43,6 @@ export async function getSkippedSongs(): Promise<SkippedSong[]> {
 
 export async function getRecommendedDeletes(): Promise<RecommendedSong[]> {
   const res = await fetch(`${BASE_URL}/api/library/recommend-delete`, {
-    headers: { Authorization: `Bearer ${getToken()}` },
   });
   if (!res.ok)
     throw new Error(
@@ -59,7 +57,6 @@ export async function generateScript(
   const res = await fetch(`${BASE_URL}/api/library/generate-script`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${getToken()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(req),
@@ -73,7 +70,6 @@ export async function generateScript(
 
 export async function getScriptSettings(): Promise<SkippedSettings | null> {
   const res = await fetch(`${BASE_URL}/api/library/script-settings`, {
-    headers: { Authorization: `Bearer ${getToken()}` },
   });
 
   if (res.status === 404) {
@@ -95,7 +91,6 @@ export async function saveScriptSettings(
   const res = await fetch(`${BASE_URL}/api/library/script-settings`, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${getToken()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(settings),

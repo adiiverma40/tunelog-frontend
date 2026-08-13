@@ -19,7 +19,6 @@ export async function fetchUserProfile(
   );
   if (!res.ok) throw new Error("Failed to fetch user profile");
   const ress = await res.json();
-  console.log(ress);
   return ress;
 }
 

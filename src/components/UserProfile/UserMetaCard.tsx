@@ -63,7 +63,7 @@ export default function UserMetaCard({ user }: Props) {
     setLoadingStats(true);
     setStats(null);
 
-    fetchUserData(user.username, user.password)
+    fetchUserData(user.username)
       .then((data) => {
         if (!alive) return;
 

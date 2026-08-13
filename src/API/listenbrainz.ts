@@ -1,4 +1,4 @@
-import { BASE_URL, getToken, getCurrentUser, getDashboardUser } from "./client";
+import { BASE_URL , getCurrentUser, getDashboardUser } from "./client";
 import type {
   ListenBrainzEntry,
   LBPlaylist,
@@ -131,7 +131,6 @@ export async function fetchLBHasToken(): Promise<
   const user = getCurrentUser();
   const res = await fetch(
     `${BASE_URL}/api/lb-cf/has-token?user=${encodeURIComponent(user)}`,
-    { headers: { Authorization: `Bearer ${getToken()}` } },
   );
   if (!res.ok) return { status: "error", reason: `HTTP ${res.status}` };
   return res.json();

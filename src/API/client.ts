@@ -29,13 +29,13 @@ try {
 
 export const BASE_URL = constructedBaseUrl;
 
-export function getToken(): string {
-  return (
-    localStorage.getItem("tunelog_token") ??
-    sessionStorage.getItem("tunelog_token") ??
-    ""
-  );
-}
+// export function getToken(): string {
+//   return (
+//     localStorage.getItem("tunelog_token") ??
+//     sessionStorage.getItem("tunelog_token") ??
+//     ""
+//   );
+// }
 
 export function getCurrentUser(): string {
   return (

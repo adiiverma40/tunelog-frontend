@@ -1,4 +1,4 @@
-import { BASE_URL, getToken } from "./client";
+import { BASE_URL } from "./client";
 import type {
   PlaylistSongsResponse,
   PlaylistGenerateResponse,
@@ -84,7 +84,6 @@ export async function fetchCreatePlaylistFromIds(
       body: JSON.stringify(data),
     },
   );
-  console.log(data);
   if (!res.ok) throw new Error("Failed to create playlist");
   return res.json();
 }
@@ -95,7 +94,6 @@ export async function tierPlaylist(
   const res = await fetch(`${BASE_URL}/api/import/tierPlaylist`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${getToken()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),

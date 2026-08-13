@@ -2,9 +2,7 @@ export type ExplicitFilter = "strict" | "allow_cleaned" | "all";
 export type SortKey = "title" | "artist" | "genre" | "signal" | "date_added";
 export type SyncMode = "regenerate" | "append";
 export type PlaylistType =
-  | "tunelog_blend"
-  | "discovery_queue"
-  | "listenbrainz_sync";
+  "tunelog_blend" | "discovery_queue" | "listenbrainz_sync" | "tunelog_tier";
 
 export type DiscoveryDateMode = "slider" | "calendar";
 
@@ -71,7 +69,9 @@ export const PLAYLIST_TYPE_REGISTRY: PlaylistTypeConfig[] = [
     label: "Tier Playlist",
     description: "Playlist ranked and grouped by tier",
     accentColor: "#7F77DD",
-    icon: "music", 
+
+    gradient: "linear-gradient(135deg, #EB743B 0%, #C45520 100%)",
+    icon: "music",
   },
 ];
 

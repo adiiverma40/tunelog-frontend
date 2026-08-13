@@ -6,10 +6,11 @@ import { logout } from "../../API";
 import { fetchUserMe } from "../../API/user_api";
 import { UserDetails } from "../../API/api_types";
 import { BASE_URL } from "../../API";
-
+import { useAuth } from "../../context/AuthContext";
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { logoutUser } = useAuth();
 
   const [user, setUser] = useState<UserDetails | null>(null);
 
@@ -37,6 +38,7 @@ export default function UserDropdown() {
   function handleSignOut() {
     logout().then(() => {
       navigate("/signin");
+      logoutUser();
     });
   }
 

@@ -97,7 +97,7 @@ export default function MostPlaysbyUser() {
                 null;
 
               try {
-                const stats = await fetchUserData(user.username, user.password);
+                const stats = await fetchUserData(user.username);
                 return {
                   ...stats,
                   username: user.username,

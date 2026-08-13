@@ -124,7 +124,6 @@ function UserAvatar({
 }) {
   const [failed, setFailed] = useState(false);
   const col = getAvatarColor(username);
-  console.log("avatarUrl", avatarUrl, "failed", failed, "username", username);
   if (avatarUrl && !failed) {
     return (
       <img

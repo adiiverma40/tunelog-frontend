@@ -138,9 +138,10 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  status: "success" | "failed";
+  status: "success" | "failed" | "ok" | "OK" | "error";
   message?: string;
   reason?: string;
+  username?: string;
 }
 
 export interface CreateUserRequest {

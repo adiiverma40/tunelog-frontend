@@ -4,6 +4,7 @@ import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
 import { fetchLogin, fetchGetUsers } from "../../API";
 
+import { useAuth } from "../../context/AuthContext";
 import {
   PLAYLIST_TYPE_REGISTRY,
   PlaylistType,
@@ -75,10 +76,10 @@ function TypeIcon({
 
 export default function Playlist() {
   const dark = useDarkMode();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const isMobile = useMediaQuery("(max-width: 640px)");
-
+  const { username: currentUsername } = useAuth();
   const [users, setUsers] = useState<string[]>([]);
   const [selectedUser, setSelectedUser] = useState("");
   const [playlistType, setPlaylistType] = useState<PlaylistType>(
@@ -95,7 +96,13 @@ export default function Playlist() {
       if (res.status === "ok" && res.users) {
         const usernames = res.users.map((u: any) => u.username);
         setUsers(usernames);
-        if (usernames.length > 0) setSelectedUser(usernames[0]);
+        if (usernames.length > 0) {
+          if (currentUsername && usernames.includes(currentUsername)) {
+            setSelectedUser(currentUsername);
+          } else {
+            setSelectedUser(usernames[0]);
+          }
+        }
       }
     });
   }, []);

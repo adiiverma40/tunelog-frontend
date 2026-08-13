@@ -4,7 +4,8 @@ import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
-import { fetchLogin } from "../../API";
+import { fetchLogin } from "../../API/auth";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +14,7 @@ export default function SignInForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { loginUser } = useAuth();
 
   const handleSignIn = async () => {
     setError("");
@@ -25,12 +27,13 @@ export default function SignInForm() {
         sessionStorage.removeItem("tunelog_token");
         sessionStorage.removeItem("tunelog_password");
 
+        loginUser(username);
         navigate("/");
       } else {
         setError(res.reason ?? "Invalid username or password");
       }
     } catch (e) {
-      setError("Could not reach server");
+      setError(`${e}`);
     } finally {
       setLoading(false);
     }

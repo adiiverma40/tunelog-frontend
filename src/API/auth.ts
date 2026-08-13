@@ -18,25 +18,23 @@ export async function fetchLogin(data: LoginRequest): Promise<LoginResponse> {
   }
 
   const json = await res.json();
-  console.log(json);
 
   if (json.status !== "success") {
-    throw new Error(json.reason || "Login failed");
+    throw new Error(json.message || "Login failed");
   }
-  console.log("success");
   return json;
 }
 
-export async function CheckAuth(): Promise<boolean> {
+export async function fetchPing(): Promise<LoginResponse> {
   try {
     const res = await fetch(`${BASE_URL}/api/ping`, {
       method: "GET",
       credentials: "include",
     });
-    return res.ok;
+    return await res.json();
   } catch (error) {
     console.error(error);
-    return false;
+    return { status: "error" };
   }
 }
 
@@ -51,11 +49,11 @@ export async function logout(): Promise<void> {
   }
 }
 
-export async function fetchPing(): Promise<{ status: string }> {
-  const res = await fetch(`${BASE_URL}/api/ping`, {
-    method: "GET",
-    credentials: "include",
-  });
-  if (!res.ok) throw new Error("Ping failed");
-  return res.json();
-}
+// export async function fetchPing(): Promise<{ status: string }> {
+//   const res = await fetch(`${BASE_URL}/api/ping`, {
+//     method: "GET",
+//     credentials: "include",
+//   });
+//   if (!res.ok) throw new Error("Ping failed");
+//   return res.json();
+// }
