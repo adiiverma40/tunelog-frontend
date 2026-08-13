@@ -12,6 +12,7 @@
 ### Changes
 - changed app.tsx to use auth context
 - Changed so that playlist page shows the current user 1st
+- Added a note for users if they are on diffrent origin name cause of `httpOnly` cookies restrictions
 
 ### Fixes:
 - Fixed 404 error when avatarUrl is undefined, previously it was using `${BASE_URL}${user?.avatar || ""}` which could result in an invalid URL or empty call to base url 

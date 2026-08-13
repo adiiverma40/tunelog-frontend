@@ -2,13 +2,11 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { remarkAlert } from "remark-github-blockquote-alert";
 import { Modal } from "../components/ui/modal";
-import { useWhatsNew } from "../hooks/useWhatsNew";
+import { useWhatsNewContext } from "../context/WhatsnewContext";
 
 export const WhatsNewModal = () => {
-  const { isOpen, entries, dismiss } = useWhatsNew();
-
+  const { isOpen, entries, dismiss } = useWhatsNewContext();
   if (entries.length === 0) return null;
-
   return (
     <Modal isOpen={isOpen} onClose={dismiss} className="max-w-[760px] p-6 lg:p-8">
       <div className="max-h-[60vh] space-y-6 overflow-y-auto pr-1">
@@ -25,7 +23,6 @@ export const WhatsNewModal = () => {
           </div>
         ))}
       </div>
-
       <div className="mt-6 flex justify-end">
         <button
           onClick={dismiss}

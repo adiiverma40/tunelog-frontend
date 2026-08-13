@@ -12,10 +12,10 @@ if (!import.meta.env.VITE_URL) {
 }
 
 let constructedBaseUrl = "";
-
+let viteUrl: URL;
 try {
   const rawUrl = import.meta.env.VITE_URL || "http://localhost";
-  const viteUrl = new URL(rawUrl);
+  viteUrl = new URL(rawUrl);
   const port = import.meta.env.VITE_SERVER_PORT || "8000";
   constructedBaseUrl = `${viteUrl.protocol}//${viteUrl.hostname}:${port}`;
 } catch (error) {
@@ -24,6 +24,12 @@ try {
 }
 
 export const BASE_URL = constructedBaseUrl;
+
+export function checkOrigin(): boolean {
+  const envOrigin = viteUrl.hostname;
+  const currentUrl = window.location.hostname;
+  return envOrigin === currentUrl;
+}
 
 export function getCurrentUser(): string {
   return (
