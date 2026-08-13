@@ -13,6 +13,9 @@
 - changed app.tsx to use auth context
 - Changed so that playlist page shows the current user 1st
 
+### Fixes:
+- Fixed 404 error when avatarUrl is undefined, previously it was using `${BASE_URL}${user?.avatar || ""}` which could result in an invalid URL or empty call to base url 
+
 ## 8th August 2026 
 
 ### Changes:

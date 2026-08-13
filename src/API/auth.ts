@@ -31,6 +31,9 @@ export async function fetchPing(): Promise<LoginResponse> {
       method: "GET",
       credentials: "include",
     });
+    // console.log(res)
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    
     return await res.json();
   } catch (error) {
     console.error(error);
@@ -48,12 +51,3 @@ export async function logout(): Promise<void> {
     console.error(error);
   }
 }
-
-// export async function fetchPing(): Promise<{ status: string }> {
-//   const res = await fetch(`${BASE_URL}/api/ping`, {
-//     method: "GET",
-//     credentials: "include",
-//   });
-//   if (!res.ok) throw new Error("Ping failed");
-//   return res.json();
-// }

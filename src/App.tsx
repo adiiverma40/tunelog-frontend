@@ -42,7 +42,7 @@ function AppContent() {
 
       fetchGetUsers().catch(() => {});
 
-      if (!auth) {
+      if (auth.status === "error") {
         navigate("/signin");
         logoutUser();
         return;

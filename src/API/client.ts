@@ -1,7 +1,3 @@
-// const viteUrl = new URL(import.meta.env.VITE_URL);
-
-// export const BASE_URL = `${viteUrl.protocol}//${viteUrl.hostname}:${import.meta.env.VITE_SERVER_PORT}`;
-//
 if (import.meta.env.VITE_API_URL) {
   alert(
     "WARNING: 'VITE_API_URL' is deprecated in your .env file. " +
@@ -28,14 +24,6 @@ try {
 }
 
 export const BASE_URL = constructedBaseUrl;
-
-// export function getToken(): string {
-//   return (
-//     localStorage.getItem("tunelog_token") ??
-//     sessionStorage.getItem("tunelog_token") ??
-//     ""
-//   );
-// }
 
 export function getCurrentUser(): string {
   return (
