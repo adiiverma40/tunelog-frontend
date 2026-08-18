@@ -49,7 +49,7 @@ jobs:
     needs: [release]
     # Only trigger Docker build if a new version was actually published
     if: ${{ needs.release.outputs.PUBLISHED == 'true' }}
-    uses: ./.github/workflows/docker-publish.yaml
+    uses: ./.github/workflows/docker-publish.yml
     with:
       app_version: ${{ needs.release.outputs.VERSION }}
     secrets: inherit
