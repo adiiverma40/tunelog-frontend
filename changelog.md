@@ -7,7 +7,7 @@
 - Adding releasing workflow
 - Changing existing `docker-publish.yml` to use workflow call
 - changed the missmatch file name 
-
+- updated to use version from `publish-ghcr` workflow
 
 ## 13th August 2026
 

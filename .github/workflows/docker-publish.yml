@@ -54,6 +54,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ inputs.app_version }}
+            type=raw,value=latest
+            type=raw,value=main
 
       - name: Build and push by digest
         id: build
@@ -66,6 +70,8 @@ jobs:
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            APP_VERSION=${{ inputs.app_version }}
 
       - name: Export digest
         if: github.event_name != 'pull_request'
@@ -118,6 +124,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ inputs.app_version }}
+            type=raw,value=latest
+            type=raw,value=main
 
       - name: Create and push multi-platform manifest
         working-directory: /tmp/digests/frontend
@@ -149,14 +159,8 @@ jobs:
       - name: Login docker
         run: crane auth login ghcr.io -u adiiverma40 -p ${{ secrets.PAT }}
 
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
-
       - name: push docker package
         run: |
-          crane copy ghcr.io/adiiverma40/tunelog-frontend/frontend:${{ steps.meta.outputs.version }} ghcr.io/adiiverma40/tunelog/frontend:${{ steps.meta.outputs.version }}
-
-          crane copy ghcr.io/adiiverma40/tunelog-frontend/frontend:${{ steps.meta.outputs.version }} ghcr.io/adiiverma40/tunelog/frontend:latest
+          crane copy ghcr.io/adiiverma40/tunelog-frontend/frontend:${{ inputs.app_version }} ghcr.io/adiiverma40/tunelog/frontend:${{ inputs.app_version }}
+          crane copy ghcr.io/adiiverma40/tunelog-frontend/frontend:${{ inputs.app_version }} ghcr.io/adiiverma40/tunelog/frontend:latest
+          crane copy ghcr.io/adiiverma40/tunelog-frontend/frontend:${{ inputs.app_version }} ghcr.io/adiiverma40/tunelog/frontend:main
