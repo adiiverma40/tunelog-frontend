@@ -1,4 +1,6 @@
 # Changlog
+## changes: 
+- Added app version in env
 
 ## 18th August 2026
 
