@@ -1,13 +1,11 @@
 name: Docker Frontend
 
 on:
-  schedule:
-    - cron: '0 20 1 * *'
-  push:
-    branches: ["main"]
-    tags: ["v*.*.*"]
-  pull_request:
-    branches: ["main"]
+  workflow_call:
+    inputs:
+      app_version:
+        type: string
+        required: true
 
 env:
   REGISTRY: ghcr.io
@@ -138,7 +136,6 @@ jobs:
 
           echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
-
   Publish-tunelog:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
@@ -149,7 +146,7 @@ jobs:
       - name: Install crane
         uses: iarekylew00t/crane-installer@v4
 
-      - name: Login docker 
+      - name: Login docker
         run: crane auth login ghcr.io -u adiiverma40 -p ${{ secrets.PAT }}
 
       - name: Extract Docker metadata
