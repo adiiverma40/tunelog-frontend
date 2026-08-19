@@ -28,20 +28,40 @@ jobs:
 
       - name: Configure Semantic Release
         run: |
-          cat <<EOF > .releaserc.json
+          cat << 'EOF' > .releaserc.json
           {
             "branches": ["main"],
             "plugins": [
               "@semantic-release/commit-analyzer",
-              "@semantic-release/release-notes-generator",
-              "@semantic-release/github"
+              [
+                "@semantic-release/exec",
+                {
+                  "generateNotesCmd": "python release_script.py note --v ${nextRelease.version}",
+                  "prepareCmd": "python release_script.py postCleanup --v ${nextRelease.version}"
+                }
+              ],
+              "@semantic-release/github",
+              [
+                "@semantic-release/git",
+                {
+                  "assets": ["changelog.md"],
+                  "message": "chore(release): ${nextRelease.version} [skip ci]"
+                }
+              ]
             ]
           }
           EOF
 
+      - name: install dependencies
+        run: pip install fire
+
       - name: Release
         id: release
         uses: cycjimmy/semantic-release-action@v4
+        with:
+          extra_plugins: |
+            @semantic-release/exec
+            @semantic-release/git
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
@@ -49,7 +69,7 @@ jobs:
     needs: [release]
     # Only trigger Docker build if a new version was actually published
     if: ${{ needs.release.outputs.PUBLISHED == 'true' }}
-    uses: ./.github/workflows/docker-publish.yml
+    uses: ./.github/workflows/docker-publish.yaml
     with:
       app_version: ${{ needs.release.outputs.VERSION }}
     secrets: inherit
