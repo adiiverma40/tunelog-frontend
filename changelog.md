@@ -6,6 +6,7 @@
 Custom script for generating release notes and changelog and updated the `publish-ghcr` workflow to accept new release note instead of generating one itself
 
 ### changes: 
+- Remaned workflow file from `.yml` to `.yaml`
 - Added app version in env
 - Created new branch `develop`
 - Adding releasing workflow
