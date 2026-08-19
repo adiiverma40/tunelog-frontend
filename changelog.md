@@ -1,10 +1,12 @@
 # Changlog
-## changes: 
+
+## [unreleased]
+
+### Added: 
+Custom script for generating release notes and changelog and updated the `publish-ghcr` workflow to accept new release note instead of generating one itself
+
+### changes: 
 - Added app version in env
-
-## 18th August 2026
-
-### Changes:
 - Created new branch `develop`
 - Adding releasing workflow
 - Changing existing `docker-publish.yml` to use workflow call
