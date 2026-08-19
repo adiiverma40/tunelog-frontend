@@ -1,6 +1,6 @@
 # Changlog
 
-## [unreleased]
+## 1.1.0
 
 ### Added: 
 Custom script for generating release notes and changelog and updated the `publish-ghcr` workflow to accept new release note instead of generating one itself
