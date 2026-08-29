@@ -25,22 +25,25 @@ import ListenbrainzLibrary from "./pages/librarySync/listenbrainz";
 import SkippedSongs from "./pages/Library/skipped";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { WhatsNewModal } from "./pages/changelog";
-import { checkOrigin } from "./API";
-import { WhatsNewProvider , useWhatsNewContext } from "./context/WhatsnewContext";
+import { checkOrigin, fetchReleaseInfo } from "./API";
+import {
+  WhatsNewProvider,
+  useWhatsNewContext,
+} from "./context/WhatsnewContext";
 
 function AppContent() {
   const navigate = useNavigate();
   const { loginUser, logoutUser } = useAuth();
-  const { showFile } = useWhatsNewContext()
-  
+  const { showFile, showMDCode } = useWhatsNewContext();
+
   useNotificationStream();
-  
+
   useEffect(() => {
     const origin = checkOrigin();
     if (!origin) {
-      showFile('mismatchOrigin.md');
+      showFile("mismatchOrigin.md");
       return;
-    };
+    }
     const verifyUser = async () => {
       const auth = await fetchPing();
 
@@ -57,6 +60,11 @@ function AppContent() {
       }
     };
     verifyUser();
+
+    fetchReleaseInfo().then((releaseInfo) => {
+      console.log(releaseInfo.backend.body);
+      showMDCode(releaseInfo.backend.body, releaseInfo.backend.tag_name);
+    });
   }, [navigate, loginUser, logoutUser]);
 
   return (

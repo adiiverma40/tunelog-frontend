@@ -1,5 +1,15 @@
 # Changlog
 
+## [unreleased]
+
+## Added:
+Added a feature for Showing `Release Note` for the update from github backend release note.
+
+## Docs:
+- Added docs and basic structure for frontend.
+- Updated some `readme.md`. Pre-requiests and Installations
+
+---
 ## 1.1.0
 
 ### Added: 

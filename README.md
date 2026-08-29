@@ -15,9 +15,19 @@ TLF provides a way to access the backend of tunelog to see the song stats, or cr
 
 
 # Installation
+## 1. Manual Installation
+
+```bash
+git clone https://github.com/adiiverma40/tunelog-frontend
+cd tunelog-frontend
+npm i
+npm run dev 
+```
 
 ## Prerequisites
-
+- NPM 
+- Node
+- Tunelog-backend: API backend for the frontend dashboard
 
 
 
