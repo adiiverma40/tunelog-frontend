@@ -9,6 +9,8 @@ Added a feature for Showing `Release Note` for the update from github backend re
 - Added docs and basic structure for frontend.
 - Updated some `readme.md`. Pre-requiests and Installations
 
+## bug
+- Ugggghhhh!!!!!, I added the commit `added: ` and semantic release dont undestand added
 ---
 ## 1.1.0
 
