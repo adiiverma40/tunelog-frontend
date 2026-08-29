@@ -1,6 +1,6 @@
 # Changlog
 
-## [unreleased]
+## 1.2.0
 
 ## Added:
 Added a feature for Showing `Release Note` for the update from github backend release note.
